@@ -8,6 +8,7 @@ var app = express();
 
 
 //cargar rutas
+var fruta_router = require('./routers/frutas');
 
 
 // body-parser convierte los datos recibidos por url a json
@@ -17,9 +18,8 @@ app.use(bodyParser.json());
 
 //configurar CORS
 
-//rutas
-app.get('/prueba_api', (req, res)=>{
-    res.status(200).send({nombre:"dickson morales"});
-})
+//rutas 
+app.use('/api', fruta_router);
 
+//exporta la variable "app" como modulo para poder ser importado
 module.exports = app;
