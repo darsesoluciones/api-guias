@@ -6,7 +6,6 @@ var bodyParser = require('body-parser');
 
 var app = express();
 
-
 //cargar rutas
 var fruta_router = require('./routers/frutas');
 
