@@ -44,8 +44,34 @@ function saveFruta(req, res){
 }
 // Fin del metodo para guardar los datos en la coleccion frutas de mongodb
 
+// Buscar documentos en una coleccion
+
+function getFrutas(req, res) {
+    Fruta.find({}).sort({'_id':-1}).exec((err, frutas) => {
+        if (err) {
+            res.status(500).send({
+                message:'Error en el servidor al intentar guardar'
+            });
+        }else{
+            if (frutas) {
+                res.status(200).send({
+                    frutas
+                }); 
+            }else{
+                res.status(404).send({
+                    message:'no hay frutas'
+                });
+            }
+        }
+    })
+}
+
+
+
+
 //exporta las funciones como metodos
 module.exports = {
     pruebas,
-    saveFruta
+    saveFruta,
+    getFrutas
 };
