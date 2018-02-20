@@ -66,12 +66,83 @@ function getFrutas(req, res) {
     })
 }
 
+// buscar solo un documento en la coleccion.
 
+function getFruta(req, res) {
+    var frutaId = req.params.id;
+    Fruta.findById(frutaId).exec((err,fruta)=>{
+        if (err) {
+            res.status(500).send({
+                message:'error al intentar buscar'
+            });
+        }else{
+            if (fruta) {
+                res.status(200).send({
+                    fruta
+                }); 
+            }else{
+                res.status(404).send({
+                    message:'no existe la fruta'
+                });
+            }
+        }
+    })
+}
 
+//metodo para guardar un documento
+function updateFruta(req, res) {
+    var frutaId =req.params.id;
+    var update = req.body;
+    Fruta.findByIdAndUpdate(frutaId, update, {new:true}, (err, frutaUpdate) =>{
+        if (err) {
+            res.status(500).send({
+                message:'error al intentar buscar'
+            });
+        }else{
+            if (frutaUpdate) {
+                res.status(200).send({
+                    fruta: frutaUpdate
+                }); 
+            }else{
+                res.status(404).send({
+                    message:'no existe la fruta'
+                });
+            }
+        }
+    } );
+    
+}
+
+// metodo borra docuemntos de la base de datos
+
+function deleteFruta(req, res) {
+    var frutaId = req.params.id;
+    Fruta.findByIdAndRemove(frutaId,(err, frutaRemoved)=>{
+        if (err) {
+            res.status(500).send({
+                message:'error al intentar buscar'
+            });
+        }else{
+            if (frutaRemoved) {
+                res.status(200).send({
+                    fruta: frutaRemoved
+                }); 
+            }else{
+                res.status(404).send({
+                    message:'no existe la fruta'
+                });
+            }
+        }
+    });
+    
+}
 
 //exporta las funciones como metodos
 module.exports = {
     pruebas,
     saveFruta,
-    getFrutas
+    getFrutas,
+    getFruta,
+    updateFruta,
+    deleteFruta
 };
